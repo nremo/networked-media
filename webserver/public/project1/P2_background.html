@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<title>BACKGROUND</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Background Of This Song</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'VT323', monospace;
+            font-size: 35px;
+            margin: 0;
+            padding: 40px;
+            color: rgb(0, 255, 174);
+            background-color: #111;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 60px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .story-container {
+            flex: 1;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        p {
+            margin: 0;
+            line-height: 1.2;
+            min-height: 1.2em;
+            text-shadow: 0 0 5px rgba(0, 255, 174, 0.5);
+            white-space: pre-wrap;
+            display: inline-block;
+        }
+
+        .side-image {
+            width: 600px;
+            height: auto;
+            border: 2px solid rgb(0, 255, 174);
+            border-radius: 10px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1s,
+                neonPulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 0 rgba(0, 255, 174, 0);
+                border-color: rgba(0, 255, 174, 0.2);
+                filter: brightness(0.5) grayscale(30%);
+                transform: scale(0.98);
+            }
+
+            100% {
+                box-shadow: 0 0 10px #fff,
+                    0 0 40px rgb(0, 255, 174),
+                    0 0 80px rgb(0, 255, 174),
+                    0 0 120px rgba(0, 255, 174, 0.6);
+                border-color: #fff;
+                filter: brightness(1.4) contrast(1.2);
+                transform: scale(1);
+            }
+        }
+
+        .spacer {
+            height: 30px;
+            width: 100%;
+        }
+
+        .typing-cursor {
+            border-right: 2px solid rgb(0, 255, 174);
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: rgb(0, 255, 174);
+            }
+        }
+
+        .back-arrow {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-family: 'VT323', monospace;
+            font-size: 35px;
+            color: rgb(0, 255, 174);
+            text-decoration: none;
+            z-index: 200;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgb(0, 255, 174);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 18s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .back-arrow:hover {
+            color: white;
+            transform: translateY(-5px);
+            text-shadow: 0 0 15px rgb(255, 0, 238);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-layout">
+
+        <div class="story-container">
+            <p>"Popular" by The Weeknd,</p>
+            <p>featuring Madonna and Playboi Carti,</p>
+            <p>is a mid-tempo R&B track from The Idol Vol. 1</p>
+            <p>(Music from the HBO Original Series)</p>
+            <p>soundtrack, released in June 2023.</p>
+
+            <div class="spacer"></div>
+
+            <p>It explores the dark, obsessive pursuit</p>
+            <p>of fame and fortune, with lyrics</p>
+            <p>depicting a woman willing to "sell her soul"</p>
+            <p>to be, as the title says, popular.</p>
+
+            <div class="spacer"></div>
+
+            <p>The song, which features 2000s-style</p>
+            <p>synth-pop elements, serves as a</p>
+            <p>commentary on modern celebrity culture,</p>
+            <p>reflecting themes from the show The Idol.</p>
+            <p>I am someone who's really interested in music</p>
+            <p>which features powerful drum beats</p>
+            <p>and a rather aggressive rhythm,</p>
+            <p>because I myself am a very energetic</p>
+            <p>and lively person,</p>
+            <p>and I like pop, rap, and R&B music. Which I think is</p>
+            <p>why I love this song so much.</p>
+            <p>It express a social norm, also insinuate the darkness</p>
+            <p>of being "Popular".</p>
+        </div>
+
+        <div>
+            <img src="Popular.jpg" class="side-image" alt="Popular Album Cover">
+        </div>
+
+    </div>
+
+    <a href="page2.html" class="back-arrow">&lt; BACK</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const paragraphs = document.querySelectorAll('.story-container p');
+
+            const typingSpeed = 30;
+            const lineDelay = 150;
+            const textData = [];
+
+            paragraphs.forEach(p => {
+                textData.push(p.textContent);
+                p.textContent = "";
+            });
+
+            let lineIndex = 0;
+
+            function typeLine() {
+                if (lineIndex >= paragraphs.length) return;
+
+                const currentP = paragraphs[lineIndex];
+                const textToType = textData[lineIndex];
+                let charIndex = 0;
+
+                currentP.classList.add('typing-cursor');
+
+                function typeChar() {
+                    if (charIndex < textToType.length) {
+                        currentP.textContent += textToType.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, typingSpeed);
+                    } else {
+                        currentP.classList.remove('typing-cursor');
+                        lineIndex++;
+                        setTimeout(typeLine, lineDelay);
+                    }
+                }
+
+                typeChar();
+            }
+
+            setTimeout(typeLine, 500);
+        });
+    </script>
+
+</body>
+
+</html>

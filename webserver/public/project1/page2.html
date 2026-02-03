@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<title>content</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu - Typewriter Effect</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'VT323', monospace;
+            font-size: 40px;
+            margin: 0;
+            padding: 0;
+            color: rgb(0, 255, 174);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #111;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            text-align: center;
+            align-items: center;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: color 0.3s, text-shadow 0.3s;
+            min-height: 1em;
+            white-space: nowrap;
+            visibility: hidden;
+            display: inline-block;
+        }
+
+        .menu a.ready-to-type {
+            visibility: visible;
+        }
+
+        .menu a:hover {
+            color: white;
+            text-shadow: 0 0 15px rgb(0, 255, 174);
+        }
+
+        .typing-cursor {
+            border-right: 3px solid rgb(0, 255, 174);
+            padding-right: 5px;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: rgb(0, 255, 174); }
+        }
+
+        .corner-dog {
+            position: fixed;
+            right: 40px;
+            bottom: 20px;
+            width: 400px;
+            height: auto;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .corner-star {
+            position: fixed;
+            right: 420px;
+            bottom: 600px;
+            width: 250px;
+            height: auto;
+            z-index: 90;
+            pointer-events: none;
+        }
+
+        .corner-star2 {
+            position: fixed;
+            top: 80px;
+            left: 40px;
+            width: 400px;
+            height: auto;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .pixel-bottom-left {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 300px;
+            height: auto;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .back-arrow {
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            font-family: 'VT323', monospace;
+            font-size: 40px;
+            color: rgb(0, 255, 174);
+            text-decoration: none;
+            z-index: 200;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgb(0, 255, 174);
+            cursor: pointer;
+        }
+
+        .back-arrow:hover {
+            color: white;
+            text-shadow: 0 0 15px rgb(255, 0, 238), 0 0 25px rgb(255, 0, 238);
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="back-arrow">&lt; BACK</a>
+
+    <div class="content-wrapper">
+
+        <div class="menu">
+            <a href="P1_story.html" data-text="> My Story With This Song"></a>
+            <a href="P2_background.html" data-text="> Background Of This Song"></a>
+            <a href="https://youtu.be/vt0i6nuqNEo?si=A9Kc8l7oa8MMiKft" target="_blank" data-text="> Link To The Music Video"></a>
+            <a href="P4_producer.html" data-text="> Producer Info"></a>
+        </div>
+
+        <img src="Pixel_Vinyl_Sticker.gif" style="width: 300px; height: auto;">
+
+    </div>
+
+    <img src="Pixel_Dog.gif" class="corner-dog" alt="Pixel Dog">
+    <img src="Pixel_Star.gif" class="corner-star" alt="Star Middle">
+    <img src="Pixel_Star2.gif" class="corner-star2" alt="Star Top Left">
+    <img src="Pixel_Phoenix.gif" class="pixel-bottom-left" alt="Phoenix Bottom Left">
+
+    <audio id="bgm" src="Popular.mp3" loop hidden></audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            const audio = document.getElementById('bgm');
+            audio.volume = 0.3; 
+
+            const playPromise = audio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Audio Autoplay Blocked. Waiting for click...");
+                    document.addEventListener('click', () => {
+                        audio.play();
+                    }, { once: true });
+                });
+            }
+
+            const links = document.querySelectorAll('.menu a');
+            
+            const typingSpeed = 60;
+            const lineDelay = 600; 
+
+            let lineIndex = 0;
+
+            links.forEach(link => link.classList.add('ready-to-type'));
+
+            function typeLine() {
+                if (lineIndex >= links.length) return;
+
+                const currentLink = links[lineIndex];
+                const textToType = currentLink.getAttribute('data-text');
+                
+                let charIndex = 0;
+                
+                currentLink.classList.add('typing-cursor');
+
+                function typeChar() {
+                    if (charIndex < textToType.length) {
+                        currentLink.textContent += textToType.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, typingSpeed);
+                    } else {
+                        currentLink.classList.remove('typing-cursor');
+                        lineIndex++;
+                        setTimeout(typeLine, lineDelay);
+                    }
+                }
+                typeChar();
+            }
+
+            setTimeout(typeLine, 500);
+        });
+    </script>
+
+</body>
+</html>

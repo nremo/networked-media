@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<title>POPULAR</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Popular</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        ::selection {
+            background: rgb(255, 0, 238);
+            color: white;                
+            text-shadow: none;            
+        }
+        
+        /* selection for firfox search engine, this is suggested by gemini, to avoid the function from not selecting */
+        ::-moz-selection {
+            background: rgb(255, 0, 238);
+            color: white;
+            text-shadow: none;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            font-size: 90px;
+            margin: 0;
+            padding: 0;
+            color: rgb(0, 255, 174);
+            height: 100vh;
+            overflow: hidden;
+            
+            text-shadow: 0 0 25px rgb(19, 47, 255),
+                         0 0 40px rgb(255, 213, 252),
+                         0 0 60px rgb(255, 236, 27);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            object-fit: cover;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-weight: normal;
+            line-height: 1;
+            cursor: text; 
+        }
+
+        .instruction-text {
+            font-size: 30px;
+            color: rgb(8, 0, 255);
+            margin-top: 15px;
+            opacity: 0.8;
+            text-shadow: 0 0 10px rgb(25, 0, 255),
+                         0 0 30px rgb(200, 20, 30);
+            
+            /* avoid user from selecting the text below */
+            user-select: none; 
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="Video_Project_1.mp4" type="video/mp4">
+    </video>
+
+    <div class="content">
+        <h1 id="target-title">Popular</h1>
+        
+        <div class="instruction-text">Select the text above to enter(There's A Surprise)</div>
+    </div>
+
+    <script>
+        // get the text info
+        document.addEventListener('mouseup', function() {
+            checkSelection();
+        });
+
+        // also if the user use shift to select
+        document.addEventListener('keyup', function() {
+            checkSelection();
+        });
+
+        function checkSelection() {
+            // check weather the user select the whole text
+            const selection = window.getSelection().toString();
+            
+            // select target text
+            const targetText = document.getElementById('target-title').innerText;
+
+            // select text = target text, it's a action
+            // .trim() deselect the space that might be miss selected
+            if (selection.trim() === targetText.trim()) {
+                
+                // function
+                window.location.href = "page2.html";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<title>MY STORY WITH THE SONG</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Story with this Song</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'VT323', monospace;
+            font-size: 35px;
+            margin: 0;
+            padding: 40px;
+            color: rgb(0, 255, 174);
+            background-color: #111;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .story-container {
+            max-width: 1200px; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        p {
+
+            margin: 2px 0; 
+            
+            line-height: 1.2;
+            min-height: 1.2em;
+            text-shadow: 0 0 5px rgba(0, 255, 174, 0.5);
+            white-space: pre-wrap;
+            display: inline-block;
+        }
+
+        .spacer {
+            height: 30px;
+            width: 100%;
+        }
+
+        .typing-cursor {
+            border-right: 2px solid rgb(0, 255, 174);
+            animation: blink-caret 0.8s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: rgb(0, 255, 174); }
+        }
+
+        .back-arrow {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            font-family: 'VT323', monospace;
+            font-size: 35px;
+            color: rgb(0, 255, 174);
+            text-decoration: none;
+            z-index: 200;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgb(0, 255, 174);
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 15s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .back-arrow:hover {
+            color: white;
+            transform: translateY(-5px);
+            text-shadow: 0 0 15px rgb(255, 0, 238);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="story-container">
+        <p>I'm a big fan of The Weeknd,</p>
+        <p>and this song "Popular" was released</p>
+        <p>for the HBO TV series, THE IDOL</p>
+        <p>(Even though I didn't watch it yet).</p>
+        
+        <div class="spacer"></div>
+
+        <p>In THE IDOL Soundtrack,</p>
+        <p>"Popular" stands out to me because of</p>
+        <p>it's poweful beats and rhythm,</p>
+        <p>also it's popular on Tiktok too,</p>
+        <p>it's everywhere, which I think also</p>
+        <p>strenthen the interests of me towards the song.</p>
+
+        <div class="spacer"></div>
+
+        <p>The title Popular, actually also</p>
+        <p>reflect what I wanted, I also wanted to be popular.</p>
+        <p>But who don't want to be popular, just like the song described,</p>
+        <p>"SELL HER SOUL TO BE POPULAR",</p>
+        <p> fame is toxic, but it's also attractive.</p>
+    </div>
+
+    <a href="page2.html" class="back-arrow">&lt; BACK</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const paragraphs = document.querySelectorAll('.story-container p');
+
+            const typingSpeed = 60;
+            const lineDelay = 100; 
+            const textData = [];
+            
+            paragraphs.forEach(p => {
+                textData.push(p.textContent);
+                p.textContent = "";
+            });
+
+            let lineIndex = 0;
+
+            function typeLine() {
+                if (lineIndex >= paragraphs.length) return;
+
+                const currentP = paragraphs[lineIndex];
+                const textToType = textData[lineIndex];
+                let charIndex = 0;
+                
+                currentP.classList.add('typing-cursor');
+
+                function typeChar() {
+                    if (charIndex < textToType.length) {
+                        currentP.textContent += textToType.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, typingSpeed);
+                    } else {
+                        currentP.classList.remove('typing-cursor');
+                        lineIndex++;
+                        setTimeout(typeLine, lineDelay);
+                    }
+                }
+
+                typeChar();
+            }
+
+            setTimeout(typeLine, 500);
+        });
+    </script>
+
+</body>
+</html>
